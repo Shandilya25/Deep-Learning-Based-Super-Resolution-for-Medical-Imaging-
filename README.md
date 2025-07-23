@@ -154,25 +154,6 @@ It is used to train the generator network by providing a signal on how to improv
 It measures the variation or changes in intensity or color between adjacent pixels in an image. It is defined as the sum of the absolute differences between neighboring pixels in both the horizontal and vertical directions in an image.  
   
 
-&nbsp;  
-## Running the demo (StreamLit App) 🧪  
-
-**1. Clone this repository branch**
-```
-git clone https://github.com/architkaila/Super-Resolution-for-Medical-Images
-
-```
-**2. Create a conda environment:** 
-```
-conda create --name st_demo python=3.9.16
-
-```
-**3. Install requirements:** 
-```
-pip install -r requirements.txt
-```
-
-```
 
 
 ```
