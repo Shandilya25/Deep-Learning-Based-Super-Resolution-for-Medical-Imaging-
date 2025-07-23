@@ -181,16 +181,19 @@ The project data and codes are arranged in the following manner:
 
 ```
 
-├── data                                <- directory for project data
-    ├── Normal_images                   <- list of image paths normal lung images
-    ├── Pneumonia_Images                <- list of image paths of lungs with Pnemonia disease
-├── notebooks                           <- directory to store any exploration notebooks used
-    ├── Mobilenet                       <- Notebooks Containing Mobilenet as backbone
-    ├── VGG19                           <- Notebooks Containing VGG19 as backbone
-    ├── VGG16                           <- Notebooks Containing VGG16 as backbone
-├── .gitignore                          <- git ignore file
-├── README.md                           <- description of project and how to set up and run it
-├── requirements.txt                    <- requirements file to document dependencies
+├── data/                                # Directory containing project data  
+│   ├── Normal_images/                   # Images of normal lungs  
+│   └── Pneumonia_Images/                # Images of lungs with Pneumonia  
+│
+├── notebooks/                           # Jupyter notebooks for experiments  
+│   ├── Mobilenet/                       # Notebooks using MobileNet as backbone  
+│   ├── VGG19/                           # Notebooks using VGG19 as backbone  
+│   └── VGG16/                           # Notebooks using VGG16 as backbone  
+│
+├── .gitignore                           # Git ignore file  
+├── README.md                            # Project description and setup guide  
+├── requirements.txt                     # Python dependencies file  
+
 ```  
 
 
