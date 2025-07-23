@@ -175,24 +175,24 @@ pip install -r requirements.txt
 ```
 
 
-&nbsp;  
+```
 ## Project Structure 🧬  
 The project data and codes are arranged in the following manner:
 
 ```
-
 ├── data/                                # Directory containing project data  
-│   ├── Normal_images/                   # Images of normal lungs  
-│   └── Pneumonia_Images/                # Images of lungs with Pneumonia  
+│   ├── Normal_images/                   # List of image paths for normal lung images  
+│   └── Pneumonia_Images/                # List of image paths for lungs with Pneumonia  
+│
 ├── notebooks/                           # Jupyter notebooks for experiments  
 │   ├── Mobilenet/                       # Notebooks using MobileNet as backbone  
 │   ├── VGG19/                           # Notebooks using VGG19 as backbone  
 │   └── VGG16/                           # Notebooks using VGG16 as backbone  
+│
 ├── .gitignore                           # Git ignore file  
 ├── README.md                            # Project description and setup guide  
 ├── requirements.txt                     # Python dependencies file  
-
-```  
+```
 
 
 
