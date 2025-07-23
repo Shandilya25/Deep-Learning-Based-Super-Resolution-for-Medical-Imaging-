@@ -157,6 +157,9 @@ It measures the variation or changes in intensity or color between adjacent pixe
 
 
 ```
+
+
+```
 ## Project Structure 🧬  
 The project data and codes are arranged in the following manner:
 
