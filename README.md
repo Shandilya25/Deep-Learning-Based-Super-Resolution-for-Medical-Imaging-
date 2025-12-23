@@ -1,19 +1,19 @@
-# Super Resolution for Medical Images ☠️
+# Super Resolution for Medical Images 
 
 &nbsp;
 
 ## Project Description ⭐  
-The application of `Generative Adversarial Networks`(GANs) in Computer Vision and Deep Learning has always fascinated me. Among the many real-world applications of GANs, `Image Inpainting` stands out, as it involves filling in missing or corrupted parts of an image using information from nearby areas. One of the most crucial appliations of image inpainting is `Super-resolution` which is the process of recovering and reconstructing the resolution of a noisy low-quality image into a very high-quality, high-resolution image. Super Resolution can be applied to Medical imaging like MRIs, CT Scans or Xrays to fill in the missing or damaged areas, helping in more accurate diagnosis.
+The application of 'Deep Learning' in Computer Vision has always fascinated me. Among the many real-world applications of deep learning, 'Image Inpainting' stands out, as it involves filling in missing or corrupted parts of an image using information from nearby areas. One of the most crucial applications closely related to image inpainting is 'Super-Resolution', which is the process of recovering and reconstructing the resolution of a noisy low-quality image into a high-quality, high-resolution image. Super-resolution can be applied to medical imaging such as 'MRI', 'CT Scans', and 'X-rays' to recover missing or degraded details, thereby supporting more accurate diagnosis.
 
-`Medical imaging` often involves capturing images using equipment that has limited resolution, such as X-ray machines or MRI scanners. This can result in images that are pixelated and blurry, making it difficult for doctors to identify key abnormalities. Moreover, to capture very high-resolution X-Ray images, the number of pixels captured by the detector need to be increased. But this in itslef isn't sufficent for high resolution images. The patient must be exposed to a larger amount of X-ray radiation to capture more detailed Chest X-rays, which can be harmful for humans. Typical X-rays imaging systems capture atleast 1024 x 1024 pixels and some systems even capture 3072 x 3072 pixels along with higher amount of radiation.
+'Medical Imaging' often involves capturing images using equipment that has limited spatial resolution, such as X-ray machines or MRI scanners. This can result in images that are pixelated and blurry, making it difficult for doctors to identify subtle abnormalities. Moreover, to capture very high-resolution X-ray images, the number of pixels recorded by the detector must be increased. However, this alone is not sufficient to obtain high-quality images. In practice, higher-resolution X-ray acquisition also requires increased radiation exposure, which can be harmful to patients. Typical X-ray imaging systems capture images at resolutions such as '1024 × 1024', and some advanced systems capture up to '3072 × 3072', but this comes at the cost of higher radiation dosage.
 
-Instead of exposing patients to higher `radiation`, we can continue to capture just low-resolution X-ray images (~256 x 256 pixels) and apply image inpainting (super resolution) to enhance the resolution of these low-quality medical images. By inpainting missing or degraded areas of the image, the GAN can create a more detailed and visually appealing image. This can improve the accuracy of diagnosis and treatment, as doctors can see more clearly the details of a patient's condition.
+Instead of exposing patients to increased 'Radiation', a safer alternative is to acquire low-resolution X-ray images (approximately '256 × 256') and apply 'Image Super-Resolution' techniques to enhance their quality. By reconstructing missing or degraded high-frequency details, deep learning models can generate sharper and more informative images without additional radiation exposure. This approach has the potential to significantly improve diagnostic accuracy while maintaining patient safety.
 
-There are many state-of-the-art architectures that have been developed previously for the purpose of super-resolution. A model that has not been used previously for medical X-Ray images is `SRGAN`. This is one of the earliest GANs that was developed for the super-resolution, and even though this performs very well, the main issue with this was it is highly compute intensive and slow. An improved version of the SRGAN called `SWIFT-SRGAN` was published in 2021. It focuses on improving the latency of the previous models for image super-resolution by reducing the computation size and introducing Depth-wise Separable Convolutions. This approach enables up-scaling low-resolution images into high-resolution images in real-time and with high efficiency, even on low-end computing devices, without compromising the clarity of the content.
+There are several state-of-the-art deep learning architectures that have been developed for image super-resolution. In this project, I experimented with multiple super-resolution models, including 'SRCNN', 'VDSR', 'Residual Dense Networks (RDN)', and 'DenseNet-based architectures' that leverage densely connected feature reuse. These models were analyzed to understand how residual learning, dense connectivity, and network depth contribute to effective reconstruction of fine-grained anatomical details in medical images.
 
-The `Aim` of this project is to train and understand the working of SRGAN and Swift-SRGAN models on my proposed dataset of Chest X-rays. I will be downscaling high quality images from the dataset to generate low-resolution images (256x256). Then the generator will train to produce high-quality upscaled images (1024x1024), and these generated images will be compared against the original ground truths by the discriminator.  
+In addition to evaluating these architectures individually, I applied 'Knowledge Distillation' techniques to transfer knowledge from larger, high-capacity teacher models to lightweight student models. Furthermore, I experimented with 'Width and Depth Compression' strategies within the distillation framework to reduce computational complexity and model size while preserving reconstruction performance. This enables the deployment of efficient super-resolution models in resource-constrained clinical environments.
 
-
+The 'Aim' of this project is to systematically study and understand the behavior of these super-resolution architectures and compression techniques on a dataset of 'Chest X-ray' images. High-quality images are downscaled to generate low-resolution inputs ('256 × 256'), and the models are trained to reconstruct high-resolution outputs ('1024 × 1024'). Model performance is evaluated using standard image quality metrics such as 'PSNR (Peak Signal-to-Noise Ratio)' and 'SSIM (Structural Similarity Index)'.
 
 &nbsp;
 ## Data Sourcing & Processing 💾  
@@ -67,20 +67,6 @@ python ./scripts/non_dl_super_resolution.py
 The metrics results are saved a csv to the `./logs/` folder with the filename `non_dl_approach_metrics.csv`   -->
 
 
-&nbsp;
-## Deep Learning Model Architecture 🧨  
-I have implemented the original [Swift-SRGAN](https://arxiv.org/pdf/2111.14320.pdf) model architecture to enhance the resolution of low-quality X-ray images. The authors trained the original Swift-SRGAN on [DIV2K](https://data.vision.ee.ethz.ch/cvl/DIV2K/) dataset and the Flickr2K dataset. I have customized this network architrcture for Chest X-Ray images using the [NIH Chest X-ray](https://www.kaggle.com/datasets/nih-chest-xrays/data) dataset. The Generative network was trained on a proposed dataset of Chest X-rays. Given an input image of size 256 x 256, the `Generator` generates a super-resolution image of size 1024 x 1024. The generated super resolution images are evaluated against the original high resolution images available in the dataset by the `Discriminator`.  
->![img.png](assets/network_architecture.png)  
-
-<br>  
-
-**_Generator Architecture_**  
-The generator consists of Depthwise Separable Convolutional layers, which are used to reduce the number of parameters and computation in the network. The major part of network is created of 16 residual blocks. Each block has a Depthwise Convolution followed by Batch Normalization, PReLU activation, another Depthwise Convolution, and Batch Normalizationa and finally a skip connection. After the residual blocks, the images is passsed thourgh upsample blocks and finally thourgh a convolution layer to generate the final output image.
-
-<br>  
- 
-**_Discriminator Architecture_**  
-The discriminator consists of 8 Depthwise Separable Convolutional blocks. Each block has a Depthwise Convolution followed by Batch Normalization and LeakyReLU activation. After the 8 blocks the images is passed through Avg Pooling and a fully connected layer to generate the final output. The objective of the discriminator is to classify super-resolution images generated by the geenrator as fake and original high-resolution images as real.  
 
 
 &nbsp;
@@ -145,12 +131,10 @@ This is a naive loss functionn whihc calculates the Mean Squared Error b/w the g
 **_Loss 2: Content Loss_**  
 It represents the information that is lost or distorted during the processing of an image. The image generated by the generator and the original high res image are passed though the MobileNetV2 network to compute the feature vectors of both the images. Content loss is calculated as the euclidean distance b/w the feature vectors of the original image and the generated image.  
   
-&nbsp;  
-**_Loss 3:  Adversarial Loss_**  
-It is used to train the generator network by providing a signal on how to improve the quality of the generated images. This is calculated based on the discriminator's output, which indicates how well it can distinguish between the real and fake images. Generator tries to minimize this loss, by trying to generate images that the discriminator cannot distinguish.  
+
   
 &nbsp;  
-**_Loss 4:  Total Variation loss_**  
+**_Loss 3:  Total Variation loss_**  
 It measures the variation or changes in intensity or color between adjacent pixels in an image. It is defined as the sum of the absolute differences between neighboring pixels in both the horizontal and vertical directions in an image.  
   
 
